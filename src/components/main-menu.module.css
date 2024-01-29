@@ -1,0 +1,20 @@
+.menu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+
+.navLink {
+  color: black;
+  font-size: 26px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 300ms ease-in-out;
+  text-decoration: none;
+}
+
+.navLink:global(.active) {
+  color: deeppink;
+  text-decoration: underline deeppink;
+}
