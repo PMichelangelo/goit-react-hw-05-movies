@@ -1,4 +1,4 @@
-import styles from './moviesPage.module.css'
+//import styles from './moviesPage.module.css'
 
 const Movies = () => {
   return (
