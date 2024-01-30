@@ -30,9 +30,9 @@ const TrendingMovies = () => {
     fetchTrendingMovies();
   }, [])
 
-  const elements = movies.map(({ id, original_title }) =>
+  const elements = movies.map(({ id, title }) =>
     (<li key={id} className={styles.listItem}>
-    <Link to={`/trending/movie/day/${id}`}>{original_title}</Link>
+    <Link to={`/trending/movie/day/${id}`}>{title}</Link>
     </li>))
 
   return (

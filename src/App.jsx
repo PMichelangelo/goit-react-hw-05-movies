@@ -2,7 +2,8 @@ import { Routes, Route } from "react-router-dom";
 
 import MainMenu from "components/MainMenu/MainMenu";
 import HomePage from "pages/HomePage/HomePage";
-import Movies from "pages/Movies/Movies";
+import MoviesPage from "pages/MoviesPage/MoviesPage";
+import SingleMoviePage from "pages/SingleMoviePage/SingleMoviePage";
 import NotFoundPage from "pages/NotFoundPage/NotFoundPage";
 
 const App = () => {
@@ -10,9 +11,10 @@ const App = () => {
     <>
       <MainMenu />
       <Routes>
-        <Route path="/" element={<HomePage/>} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/" element={<NotFoundPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/trending/movie/day/:id" element={<SingleMoviePage/>} />
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
 

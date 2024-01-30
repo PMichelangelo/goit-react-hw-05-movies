@@ -14,3 +14,11 @@ export const getTrendingMovies = () => {
     }
   })
 }
+
+export const getMovieById = (id) => {
+  return instance.get(`/trending/movie/day/${id}`, {
+    headers: {
+      Authorization: `Bearer ${BEARER_TOKEN}`
+    }
+  })
+}
