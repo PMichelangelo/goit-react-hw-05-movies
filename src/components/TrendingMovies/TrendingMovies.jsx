@@ -32,7 +32,7 @@ const TrendingMovies = () => {
 
   const elements = movies.map(({ id, title }) =>
     (<li key={id} className={styles.listItem}>
-    <Link to={`/trending/movie/day/${id}`}>{title}</Link>
+    <Link to={`/movies/${id}`}>{title}</Link>
     </li>))
 
   return (

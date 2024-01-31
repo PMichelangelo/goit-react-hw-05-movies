@@ -8,14 +8,14 @@ const SingleMovie = () => {
   const [movie, setMovie] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const { id } = useParams()
+  const { movie_id } = useParams()
 
   useEffect(() => {
     const fetchSingleMovie = async () => {
         try {
           setLoading(true)
-          const {data} = await getMovieById(id)
-          setMovie(data.results)
+          const response = await getMovieById(movie_id);
+          setMovie(response.data);
         } catch (error) {
         setError(error.message)
       }
@@ -24,7 +24,7 @@ const SingleMovie = () => {
         }
       }
       fetchSingleMovie()
-  }, [id])
+  }, [movie_id])
   return (
     <div>
       {loading && <p>...loading</p>}
