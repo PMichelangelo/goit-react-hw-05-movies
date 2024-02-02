@@ -15,8 +15,45 @@ export const getTrendingMovies = () => {
   })
 }
 
+export const getMovieByQuery = (query) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${BEARER_TOKEN}`
+    },
+    params: {
+      query: query
+    }
+  }
+  return instance.get('/search/movie', options)
+}
+
+
 export const getMovieById = (movie_id) => {
   return instance.get(`/movie/${movie_id}`, {
+    params: {
+      api_key: API_KEY,
+    }
+  } ,{
+    headers: {
+      Authorization: `Bearer ${BEARER_TOKEN}`
+    }
+  })
+}
+
+export const getCastById = movie_id => {
+  return instance.get(`/movie/${movie_id}/credits`, {
+    params: {
+      api_key: API_KEY,
+    }
+  } ,{
+    headers: {
+      Authorization: `Bearer ${BEARER_TOKEN}`
+    }
+  })
+}
+
+export const getReviewsById = movie_id => {
+  return instance.get(`/movie/${movie_id}/reviews`, {
     params: {
       api_key: API_KEY,
     }

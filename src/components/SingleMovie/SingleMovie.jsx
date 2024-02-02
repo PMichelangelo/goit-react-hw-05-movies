@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate, useLocation, Link, Outlet } from 'react-router-dom'
 import { getMovieById} from 'api/movie'
 
 import styles from './singleMovie.module.css'
@@ -9,9 +9,11 @@ const SingleMovie = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const { movieId } = useParams()
+  const navigate = useNavigate()
 
   const params = useParams()
-  console.log(params)
+  const location = useLocation()
+  console.log(location)
 
   useEffect(() => {
     const fetchSingleMovie = async () => {
@@ -33,17 +35,21 @@ const SingleMovie = () => {
 
   const defaultImg = '<https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700>'
 
+  const goBack = () => navigate(location.state.from)
+
   return (
     <div>
       {loading && <p>...loading</p>}
       {error && <p>{error}</p>}
+      <button onClick={goBack} type='button'>Go back</button>
       {movie && (
-        <><div>
+        <div>
           <h2>{movie.title} ({new Date(movie.release_date).getFullYear()})</h2>
           <p>User score: {(movie.vote_average * 10).toFixed(0)}%</p>
            {movie.backdrop_path ? (
             <img className={styles.poster}
-            src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/original${movie.poster_path}
+            `}
             alt='poster'/>) : (<img src={defaultImg} alt="poster" />)}
           <h3>Overwie</h3>
           <p>{movie.overview}</p>
@@ -55,12 +61,11 @@ const SingleMovie = () => {
           </ul>
           <h5>Additional information</h5>
           <ul>
-            <li>Cast</li>
-            <li>Reviews</li>
+            <li><Link to="credits" state={{ from: location.state.from }}>Cast</Link></li>
+            <li><Link to="reviews" state={{from:location.state.from }}>Reviews</Link></li>
+            <Outlet/>
           </ul>
         </div>
-
-        </>
       )}
     </div>
 )

@@ -1,9 +1,13 @@
+import SearchMovie from "components/SearchMovie/SearchMovie"
 //import styles from './moviesPage.module.css'
 
-const Movies = () => {
+
+const MoviesPage = () => {
   return (
-    <div>Movies</div>
+    <div>
+      <SearchMovie/>
+    </div>
   )
 }
 
-export default Movies
+export default MoviesPage
