@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { useParams, Link, useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 import { getMovieByQuery } from "api/movie"
 import SearchForm from "components/SearchForm/SearchForm"
@@ -71,7 +71,7 @@ const SearchMovie = () => {
   const [search, setSearch] = useState(routeQuery || "");
   const prevSearchRef = useRef('');
 
-
+console.log(setSearchParams)
   useEffect(() => {
     const fetchMovieByQuery = async () => {
       try {

@@ -11,7 +11,6 @@ const SingleMovie = () => {
   const { movieId } = useParams()
   const navigate = useNavigate()
 
-  const params = useParams()
   const location = useLocation()
   console.log(location)
 
