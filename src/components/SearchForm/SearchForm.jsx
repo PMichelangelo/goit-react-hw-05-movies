@@ -12,8 +12,7 @@ const SearchForm = ({ onSubmit  }) => {
   }, []);
 
   const handleChange = e => {
-    const { value } = e.target;
-    setSearch(value);
+    setSearch(e.target.search);
   };
 
   const handleSubmit = e => {
