@@ -5,7 +5,7 @@ import { getMovieByQuery } from "api/movie";
 const SearchMovie = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams] = useSearchParams();
@@ -21,7 +21,7 @@ const SearchMovie = () => {
         const queryResponse = await getMovieByQuery(query);
         setMovies(queryResponse.data.results);
       } catch (error) {
-        setError(error.message);
+        //setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -45,13 +45,12 @@ const SearchMovie = () => {
       const response = await getMovieByQuery(searchQuery);
       setMovies(response.data.results);
     } catch (error) {
-      setError(error.message);
+      //setError(error.message);
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
 
-    // Обновляем параметры запроса
     searchParams.set("query", searchQuery);
   };
 
