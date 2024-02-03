@@ -1,46 +1,39 @@
-
 import React, { useState, useRef, useEffect } from "react";
 
-const SearchForm = ({ onSubmit  }) => {
-  const [search, setSearch] = useState('');
-
+const SearchForm = ({ onSubmit }) => {
+  const [search, setSearch] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
-    console.log(inputRef);
     inputRef.current.focus();
   }, []);
 
-  const handleChange = e => {
-    setSearch(e.target.search);
+  const handleChange = (e) => {
+    setSearch(e.target.value);
   };
 
-  const handleSubmit = e => {
-    console.log(`Searchbar ${search}`);
+  const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(search);
-    setSearch('');
+    setSearch("");
   };
 
-
   return (
-    <form onSubmit={handleSubmit} >
-        <button type="submit" >
-          <span >Search</span>
-        </button>
-
-        <input
-          ref={inputRef}
-          value={search}
-          onChange={handleChange}
-          name="search"
-          type="text"
-          required
-          autoComplete="off"
-          autoFocus
-          placeholder="Search images and photos"
-        />
-      </form>
+    <form onSubmit={handleSubmit}>
+      <input
+        ref={inputRef}
+        value={search}
+        onChange={handleChange}
+        type="text"
+        required
+        autoComplete="off"
+        autoFocus
+        placeholder="Search images and photos"
+      />
+      <button type="submit">
+        <span>Search</span>
+      </button>
+    </form>
   );
 };
 

@@ -1,8 +1,83 @@
-import { useState, useEffect, useRef } from "react"
-import { Link, useSearchParams, useLocation } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { Link, useSearchParams, useLocation } from "react-router-dom";
+import { getMovieByQuery } from "api/movie";
 
-import { getMovieByQuery } from "api/movie"
-import SearchForm from "components/SearchForm/SearchForm"
+const SearchMovie = () => {
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams] = useSearchParams();
+
+  const location = useLocation()
+
+  useEffect(() => {
+    const query = searchParams.get("query") || "";
+
+    const fetchMovies = async () => {
+      try {
+        setLoading(true);
+        const queryResponse = await getMovieByQuery(query);
+        setMovies(queryResponse.data.results);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Проверка на существование query
+    if (query) {
+      fetchMovies();
+    }
+  }, [searchParams]);
+
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!searchQuery) {
+      return alert("Sorry, but we can't find an empty query");
+    }
+
+    try {
+      setLoading(true);
+      const response = await getMovieByQuery(searchQuery);
+      setMovies(response.data.results);
+    } catch (error) {
+      setError(error.message);
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+
+    // Обновляем параметры запроса
+    searchParams.set("query", searchQuery);
+  };
+
+  return (
+    <>
+      <form onSubmit={onFormSubmit}>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+      {loading && <p>Loading...</p>}
+      <ul>
+        {movies.map(({ id, title }) => (
+          <li key={id}>
+            <Link to={`/movies/${id}`} state={{from: location}}>{title}</Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
+
+export default SearchMovie;
 /*
 const SearchMovie = () => {
 
@@ -63,27 +138,11 @@ const SearchMovie = () => {
 
 export default SearchMovie*/
 
-const SearchMovie = () => {
-  const [movie, setMovie] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const { searchParams, setSearchParams } = useSearchParams()
-  const [value, setValue] = useState(searchParams.get("query") ||'')
-  //const [search, setSearch] = useState(routeQuery || "");
-  const prevSearchRef = useRef('');
-  const query = searchParams.get('query') || '';
-
-  const onFormSubmit = e => {
-    e.preventDefault()
-    if (value === '') {
-      return alert ('We cant find anything by empty query')
+  /*useEffect(() => {
+    const fetchMovieByQuery = async () => {
+      if (query === prevSearchRef.current) {
+      return;
     }
-    setSearchParams({query: value})
-  }
-
-console.log(setSearchParams)
-  useEffect(() => {
-    const fetchMovieByQuery = async (query) => {
       try {
         setLoading(true)
         const queryResponse = await getMovieByQuery(query);
@@ -103,10 +162,10 @@ console.log(setSearchParams)
     if (!query) {
       return
     }
-    fetchMovieByQuery()
+    fetchMovieByQuery(query)
       prevSearchRef.current = query;
 
-  }, [query])
+  }, [query])*/
 
 
   //const handleSearch = (searchValue) => {
@@ -116,12 +175,12 @@ console.log(setSearchParams)
    // console.log("Submited search:", searchValue)
   //}
 
-  const elements = movie.results && movie.results.map(({ id, title }) =>
+ /*  const elements = movie.results && movie.results.map(({ id, title }) =>
     (<li key={id}>
     <Link to={`/movies/${id}`} state={{from: '/movies'}}>{title}</Link>
-    </li>))
+    </li>))*/
 
-  return (
+  /*return (
     <div>
       <SearchForm onSubmit ={onFormSubmit} />
       {loading && <p>...loading</p>}
@@ -133,7 +192,6 @@ console.log(setSearchParams)
       )}
     </div>
   )
-}
-export default SearchMovie
+}*/
 
 

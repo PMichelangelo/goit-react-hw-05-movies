@@ -12,7 +12,7 @@ const SingleMovie = () => {
   const navigate = useNavigate()
 
   const location = useLocation()
-  console.log(location)
+  console.log("Pathname :",location.pathname)
 
   useEffect(() => {
     const fetchSingleMovie = async () => {
