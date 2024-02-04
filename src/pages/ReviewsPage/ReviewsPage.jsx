@@ -40,6 +40,7 @@ const ReviewsPage = () => {
     <>
       {loading && <p>...loading</p>}
       {error && <p>{error}</p>}
+      {!loading && !isReviews && <p>No reviews available</p>}
       {isReviews && <ul>{elements}</ul>}
     </>
   )
