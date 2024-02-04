@@ -12,6 +12,7 @@ const SingleMovie = () => {
   const navigate = useNavigate()
 
   const location = useLocation()
+  const from = location.state?.from || "/"
   console.log("Pathname :",location.pathname)
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const SingleMovie = () => {
 
   const defaultImg = '<https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700>'
 
-  const goBack = () => navigate(location.state.from)
+  const goBack = () => navigate(from)
 
   return (
     <div>
@@ -60,8 +61,12 @@ const SingleMovie = () => {
           </ul>
           <h5>Additional information</h5>
           <ul>
-            <li><Link to="credits" state={{ from: location.state.from }}>Cast</Link></li>
-            <li><Link to="reviews" state={{from:location.state.from }}>Reviews</Link></li>
+            <li>
+              <Link to="credits" state={{ from }}>Cast</Link>
+            </li>
+            <li>
+              <Link to="reviews" state={{ from }}>Reviews</Link>
+            </li>
             <Outlet/>
           </ul>
         </div>

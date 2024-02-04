@@ -1,57 +1,60 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams, useLocation } from "react-router-dom";
+import { Link, useSearchParams, useLocation} from "react-router-dom";
 import { getMovieByQuery } from "api/movie";
 
 const SearchMovie = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  //const [error, setError] = useState(null);
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchParams] = useSearchParams();
-
+  const [error, setError] = useState(null);
+const [searchParams, setSearchParams] = useSearchParams()
+const [value, setValue] = useState(searchParams.get("query") || "");
   const location = useLocation()
 
+  const fetchMoviesByQuery = async (query) => {
+    try {
+      setLoading(true);
+      const response = await getMovieByQuery(query);
+      setMovies(response.data.results);
+    } catch (error) {
+      setError(error.message);
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // useEffect для обработки случая, когда query уже есть в searchParams
   useEffect(() => {
-    const query = searchParams.get("query") || "";
+    const query = searchParams.get("query");
 
-    const fetchMovies = async () => {
-      try {
-        setLoading(true);
-        const queryResponse = await getMovieByQuery(query);
-        setMovies(queryResponse.data.results);
-      } catch (error) {
-        //setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Проверка на существование query
     if (query) {
-      fetchMovies();
+      fetchMoviesByQuery(query);
     }
   }, [searchParams]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (!searchQuery) {
+    if (!value) {
       return alert("Sorry, but we can't find an empty query");
     }
 
     try {
       setLoading(true);
-      const response = await getMovieByQuery(searchQuery);
-      setMovies(response.data.results);
+      setSearchParams({ query: value });
+      await getMovieByQuery(value)
+      //const response = await getMovieByQuery(value);
+      //setMovies(response.data.results);
+      //setSearchParams({query: value})
     } catch (error) {
-      //setError(error.message);
+      setError(error.message);
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
 
-    searchParams.set("query", searchQuery);
+    searchParams.set("query :", value);
+
   };
 
   return (
@@ -59,8 +62,8 @@ const SearchMovie = () => {
       <form onSubmit={onFormSubmit}>
         <input
           type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={value}
+          onChange={(e) => setValue( e.target.value )}
         />
         <button type="submit">Search</button>
       </form>
