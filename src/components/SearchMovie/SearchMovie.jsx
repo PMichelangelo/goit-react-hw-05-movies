@@ -5,7 +5,7 @@ import { getMovieByQuery } from "api/movie";
 const SearchMovie = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
 const [searchParams, setSearchParams] = useSearchParams()
 const [value, setValue] = useState(searchParams.get("query") || "");
   const location = useLocation()
@@ -16,14 +16,13 @@ const [value, setValue] = useState(searchParams.get("query") || "");
       const response = await getMovieByQuery(query);
       setMovies(response.data.results);
     } catch (error) {
-      setError(error.message);
+      //setError(error.message);
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  // useEffect для обработки случая, когда query уже есть в searchParams
   useEffect(() => {
     const query = searchParams.get("query");
 
@@ -47,7 +46,7 @@ const [value, setValue] = useState(searchParams.get("query") || "");
       //setMovies(response.data.results);
       //setSearchParams({query: value})
     } catch (error) {
-      setError(error.message);
+      //setError(error.message);
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
