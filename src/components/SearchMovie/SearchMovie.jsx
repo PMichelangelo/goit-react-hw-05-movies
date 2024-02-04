@@ -10,26 +10,31 @@ const SearchMovie = () => {
   const [value, setValue] = useState(searchParams.get("query") || "");
   const location = useLocation()
 
+useEffect(() => {
+  const query = searchParams.get("query");
+
   const fetchMoviesByQuery = async (query) => {
     try {
       setLoading(true);
       const response = await getMovieByQuery(query);
+      if (response.data.results.length === 0) {
+        setValue("")
+        return alert("No movies found for your query.");
+      }
       setMovies(response.data.results);
     } catch (error) {
-      setError(errorMsg.message);
+      setError(error.message);
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    const query = searchParams.get("query");
-
     if (query) {
-      fetchMoviesByQuery(query);
+     fetchMoviesByQuery(query);
     }
-  },[searchParams]);
+
+}, [searchParams]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
