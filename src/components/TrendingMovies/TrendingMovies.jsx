@@ -17,7 +17,6 @@ const TrendingMovies = () => {
       try {
         setLoading(true)
         const { data } = await getTrendingMovies();
-           console.log('API Response:', data.results);
         setMovies(data.results?.length ? data.results : [])
       } catch (error) {
         setError(error.message)
@@ -36,14 +35,14 @@ const TrendingMovies = () => {
     </li>))
 
   return (
-    <>
-      {error && <p className={styles.error}>{error}</p>}
-      {loading && <p>...Loading</p>}
-      {Boolean(elements.length) && (<ol className={styles.list}>
-        {elements}
-      </ol>)}
-
-    </>
+      <div className={styles.trendingWrapper}>
+        <h3>Trending today</h3>
+        {error && <p className={styles.error}>{error}</p>}
+        {loading && <p>...Loading</p>}
+        {Boolean(elements.length) && (<ol className={styles.list}>
+          {elements}
+        </ol>)}
+      </div>
   )
 
 }

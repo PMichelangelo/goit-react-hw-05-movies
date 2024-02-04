@@ -13,7 +13,6 @@ const SingleMovie = () => {
 
   const location = useLocation()
   const from = location.state?.from || "/"
-  console.log("Pathname :",location.pathname)
 
   useEffect(() => {
     const fetchSingleMovie = async () => {
@@ -21,8 +20,6 @@ const SingleMovie = () => {
           setLoading(true)
           const movieResponse = await getMovieById(movieId);
           setMovie(movieResponse.data);
-          console.log('movieResponse:', movieResponse.data);
-
         } catch (error) {
         setError(error.message)
       }
@@ -38,38 +35,45 @@ const SingleMovie = () => {
   const goBack = () => navigate(from)
 
   return (
-    <div>
+    <div
+    className={styles.movieWrapper}>
       {loading && <p>...loading</p>}
       {error && <p>{error}</p>}
-      <button onClick={goBack} type='button'>Go back</button>
+      <button onClick={goBack} type='button' className={styles.goBackBtn}>← Go back</button>
       {movie && (
-        <div>
-          <h2>{movie.title} ({new Date(movie.release_date).getFullYear()})</h2>
-          <p>User score: {(movie.vote_average * 10).toFixed(0)}%</p>
+        <>
+        <div className={styles.movieInfo}>
            {movie.backdrop_path ? (
             <img className={styles.poster}
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}
             `}
-            alt='poster'/>) : (<img src={defaultImg} alt="poster" />)}
+                alt='poster' />) : (<img src={defaultImg} alt="poster" />)}
+        <div>
+          <h2>{movie.title} ({new Date(movie.release_date).getFullYear()})</h2>
+          <p>User score: {(movie.vote_average * 10).toFixed(0)}%</p>
           <h3>Overwie</h3>
           <p>{movie.overview}</p>
           <h3>Genres</h3>
-          <ul>
+          <ul className={styles.genresList}>
             {movie.genres.map((genre) => (
               <li key={genre.id}>{genre.name}</li>
             ))}
           </ul>
-          <h5>Additional information</h5>
-          <ul>
-            <li>
+        </div>
+      </div>
+        <div className={styles.additionalInfo}>
+            <h5>Additional information</h5>
+          <ul className={styles.additionalInfoList}>
+            <li className={styles.additionalInfoItem}>
               <Link to="credits" state={{ from }}>Cast</Link>
             </li>
-            <li>
+            <li className={styles.additionalInfoItem}>
               <Link to="reviews" state={{ from }}>Reviews</Link>
             </li>
             <Outlet/>
           </ul>
         </div>
+      </>
       )}
     </div>
 )

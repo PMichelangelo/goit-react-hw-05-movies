@@ -1,0 +1,21 @@
+.list {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  padding: 0;
+}
+.listItem {
+  border: 1px solid rgba(0, 0, 0, 0.199);
+}
+
+.actor {
+  width: 180px;
+  height: 270px;
+}
+
+.actorName {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+}

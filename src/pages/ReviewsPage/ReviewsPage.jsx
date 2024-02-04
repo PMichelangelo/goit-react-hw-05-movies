@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getReviewsById } from "api/movie";
 
+import styles from "./review.module.css"
+
 const ReviewsPage = () => {
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(false)
@@ -14,7 +16,6 @@ const ReviewsPage = () => {
           setLoading(true)
           const reviewsResponse = await getReviewsById(movieId);
           setReviews(reviewsResponse.data.results);
-          console.log('reviewsResponse:', reviewsResponse.data.results);
 
         } catch (error) {
         setError(error.message)
@@ -28,9 +29,9 @@ const ReviewsPage = () => {
 
 
   const elements = reviews.map(({ id, author,content }) => (
-    <li key={id}>
-      <h5>{author}</h5>
-      <p>{content}</p>
+    <li key={id} className={styles.listItem}>
+      <h5 className={styles.author}>{author}</h5>
+      <p className={styles.content}>{content}</p>
     </li>
   ))
 
@@ -41,7 +42,7 @@ const ReviewsPage = () => {
       {loading && <p>...loading</p>}
       {error && <p>{error}</p>}
       {!loading && !isReviews && <p>No reviews available</p>}
-      {isReviews && <ul>{elements}</ul>}
+      {isReviews && <ul className={styles.list}>{elements}</ul>}
     </>
   )
 }
