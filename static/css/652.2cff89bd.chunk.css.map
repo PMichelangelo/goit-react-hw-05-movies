@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/652.2cff89bd.chunk.css","mappings":"AAGA,4CACE,SACF,CAEA,sBACE,cACF,CAEA,uBACE,cACF","sources":["pages/ReviewsPage/review.module.css"],"sourcesContent":[".list {\n  padding: 0;\n}\n.listItem {\n  padding: 0;\n}\n\n.author {\n  font-size: 20px;\n}\n\n.content {\n  padding: 0 20px;\n}\n"],"names":[],"sourceRoot":""}
