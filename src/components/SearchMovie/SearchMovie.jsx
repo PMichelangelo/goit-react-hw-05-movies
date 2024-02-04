@@ -29,7 +29,7 @@ const SearchMovie = () => {
     if (query) {
       fetchMoviesByQuery(query);
     }
-  }, [searchParams]);
+  },[searchParams]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
