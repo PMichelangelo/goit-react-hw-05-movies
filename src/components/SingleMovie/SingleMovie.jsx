@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useParams, useNavigate, useLocation, Link, Outlet } from 'react-router-dom'
-import { getMovieById} from 'api/movie'
+import { getMovieById } from 'api/movie'
 
 import styles from './singleMovie.module.css'
 
@@ -69,8 +69,10 @@ const SingleMovie = () => {
             </li>
             <li className={styles.additionalInfoItem}>
               <Link to="reviews" state={{ from }}>Reviews</Link>
-            </li>
-            <Outlet/>
+              </li>
+              <Suspense>
+                <Outlet/>
+              </Suspense>
           </ul>
         </div>
       </>
